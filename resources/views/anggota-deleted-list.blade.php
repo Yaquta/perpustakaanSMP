@@ -1,22 +1,16 @@
 @extends('layouts.mainlayout')
 
-@section('title', 'Kategori')
+@section('title', 'deleted-list')
 
 @section('content')
-    <h1>Kategori</h1>
-
-    <div class="mt-5 d-flex justify-content-end">
-        <a href="category-deleted" class="btn btn-secondary me-3">Data Terhapus</a>
-        <a href="category-add" class="btn btn-primary">Tambah Kategori</a>
-    </div>
+    <h1>Anggota Terhapus</h1>
 
     <div class="mt-5">
-        @if (session('status'))
+        @if (session('success'))
             <div class="alert alert-success">
-                {{ session('status') }}
+                {{ session('success') }}
             </div>
         @endif
-
     </div>
 
 
@@ -26,21 +20,27 @@
                 <tr>
                     <th>No.</th>
                     <th>Nama</th>
+                    <th>NISN</th>
+                    <th>Phone</th>
+                    <th>Address</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $item)
+                @foreach ($deletedAnggota as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->username }}</td>
+                        <td>{{ $item->NISN }}</td>
+                        <td>{{ $item->phone }}</td>
+                        <td>{{ $item->address }}</td>
                         <td>
-                            <a href="category-edit/{{ $item->slug }}"><i class="bi bi-pencil-square"></i></a>
-
-                            <a href="category-delete/{{ $item->slug }}"><i class="bi bi-trash3"></i></a>
+                            <a href="{{ route('anggota.restore', $item->id) }}">restore</a>
                         </td>
+
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>

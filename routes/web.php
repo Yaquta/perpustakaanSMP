@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RentLogController;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Anggota;
 use Illuminate\Support\Facades\Route;
 
@@ -34,12 +35,23 @@ Route::get('book-destroy/{slug}', [BookController::class,'destroy' ])->middlewar
 Route::get('book-deleted', [BookController::class,'deletedBook' ])->middleware('auth');
 Route::get('book-restore/{slug}', [BookController::class,'restore' ])->middleware('auth');
 
+Route::get('/cover/{filename}', function ($filename) {
+    $path = storage_path('app/private/cover/' . $filename);
+    
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path);
+})->middleware('auth'); // Opsional: agar hanya user tertentu yang bisa mengakses
+
+
 
 Route::get('categories', [CategoryController::class,'index' ])->middleware('auth');
 Route::get('category-add', [CategoryController::class,'add' ])->middleware('auth');
 Route::post('category-add', [CategoryController::class,'store' ])->middleware('auth');
 Route::get('category-edit/{slug}', [CategoryController::class,'edit' ])->middleware('auth');
-Route::put('category-edit/{slug}', [CategoryController::class,'update' ])->middleware('auth');
+Route::put('category-update/{slug}', [CategoryController::class,'update' ])->middleware('auth');
 Route::get('category-delete/{slug}', [CategoryController::class,'delete' ])->middleware('auth');
 Route::get('category-destroy/{slug}', [CategoryController::class,'destroy' ])->middleware('auth');
 Route::get('category-deleted', [CategoryController::class,'deletedCategory' ])->middleware('auth');
@@ -47,7 +59,15 @@ Route::get('category-restore/{slug}', [CategoryController::class,'restore' ])->m
 
 Route::get('members', [MemberController::class,'index' ])->middleware('auth');
 
-Route::get('anggotas', [AnggotaController::class,'index' ])->middleware('auth');
+Route::get('anggotas', [AnggotaController::class,'index' ])->middleware('auth')->name('anggota.index');
 Route::get('anggota-add', [AnggotaController::class,'add' ])->middleware('auth');
+Route::post('anggota-store', [AnggotaController::class,'store'])->middleware('auth');
+Route::get('anggota-edit/{anggota}', [AnggotaController::class,'edit'])->middleware('auth')->name('anggota.edit');
+Route::put('anggota-update/{anggota}', [AnggotaController::class,'update'])->middleware('auth')->name('anggota.update') ;
+Route::get('anggota-destroy/{anggota}', [AnggotaController::class,'destroy'])->middleware('auth')->name('anggota.destroy') ;
+Route::get('anggota-delete/{anggota}', [AnggotaController::class,'delete'])->middleware('auth')->name('anggota.delete') ;
+Route::get('anggota-deleted-list',[AnggotaController::class,'deletedAnggota'])->middleware('auth')->name('anggota.deletedList') ;
+Route::get('anggota-restore/{slug}',[AnggotaController::class,'restore'])->middleware('auth')->name('anggota.restore');
 
 Route::get('rent-logs', [RentLogController::class,'index' ])->middleware('auth');
+Route::get('rent-logs-detail/{anggota}', [RentLogController::class,'rentLog'])->middleware('auth')->name('rentlog.detail');
