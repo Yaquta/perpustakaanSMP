@@ -11,14 +11,8 @@ class RentLogController extends Controller
 {
     public function index()
     {   
-        $anggotaListed = Anggota::all();
-        return view('rentlog', ['anggotaListed'=> $anggotaListed]);
+        return view('rentlog');
     }
 
-    public function rentLog(Anggota $anggota)
-    {
-        $userAuth = Auth::user();
-        $admin = User::where('id', $userAuth->id)->first();
-        return view('rentlog-detail', ['anggota'=> $anggota, 'admin' => $admin]);
-    }
+    
 }

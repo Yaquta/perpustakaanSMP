@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RentLogController;
+use App\Http\Controllers\RentFormsController;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Anggota;
 use Illuminate\Support\Facades\Route;
@@ -70,4 +71,7 @@ Route::get('anggota-deleted-list',[AnggotaController::class,'deletedAnggota'])->
 Route::get('anggota-restore/{slug}',[AnggotaController::class,'restore'])->middleware('auth')->name('anggota.restore');
 
 Route::get('rent-logs', [RentLogController::class,'index' ])->middleware('auth');
-Route::get('rent-logs-detail/{anggota}', [RentLogController::class,'rentLog'])->middleware('auth')->name('rentlog.detail');
+
+Route::get('rent-forms', [RentFormsController::class,'index' ])->middleware('auth');
+Route::get('rent-forms-detail/{anggota}', [RentFormsController::class,'rentForms'])->middleware('auth')->name('rentforms.detail');
+Route::post('rent-forms-submit', [RentFormsController::class,'store'])->middleware('auth')->name('rentforms.submit');
