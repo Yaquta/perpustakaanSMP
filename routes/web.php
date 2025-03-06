@@ -71,6 +71,7 @@ Route::get('anggota-deleted-list',[AnggotaController::class,'deletedAnggota'])->
 Route::get('anggota-restore/{slug}',[AnggotaController::class,'restore'])->middleware('auth')->name('anggota.restore');
 
 Route::get('rent-logs', [RentLogController::class,'index' ])->middleware('auth');
+Route::post('rent-logs/update-return-date/{id}', [RentLogController::class, 'updateReturnDate'])->middleware('auth');
 
 Route::get('rent-forms', [RentFormsController::class,'index' ])->middleware('auth');
 Route::get('rent-forms-detail/{anggota}', [RentFormsController::class,'rentForms'])->middleware('auth')->name('rentforms.detail');

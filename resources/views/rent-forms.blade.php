@@ -4,6 +4,16 @@
 
 @section('content')
     <h1 class="text-2xl font-bold mb-5">Form Peminjaman Buku</h1>
+
+    <div class="mt-5">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
+
+
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
         <form action="{{ route('rentforms.submit') }}" method="POST">
             @csrf

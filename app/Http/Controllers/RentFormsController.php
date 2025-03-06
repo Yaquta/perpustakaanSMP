@@ -38,7 +38,7 @@ class RentFormsController extends Controller
             $books->save();
         }
         
-        return redirect()->back()->with('success','');
+        return redirect('rent-forms')->with('success','form peminjaman berhasil diinput');
 
     }
 }
