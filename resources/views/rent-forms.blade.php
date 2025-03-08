@@ -13,6 +13,14 @@
         @endif
     </div>
 
+    <div class="mt-5">
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
+
 
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
         <form action="{{ route('rentforms.submit') }}" method="POST">

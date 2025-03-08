@@ -78,39 +78,45 @@
     </div>
     <div class="mt-5">
         <h2>History</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Anggota</th>
-                    <th>Judul Buku</th>
-                    <th>Peminjaman Buku</th>
-                    <th>Batas Waktu</th>
-                    <th>Pengembalian Buku</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($rentLog as $rent)
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-bordered">
+                <thead class="table-dark">
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $rent->anggota->username ?? 'N/A' }}</td>
-                        <td>{{ $rent->book->title ?? 'N/A' }}</td>
-                        <td>{{ $rent->rent_date }}</td>
-                        <td>{{ $rent->return_date }}</td>
-                        <td>{{ $rent->actual_return_date ?? 'Belum dikembalikan' }}</td>
-                        <td>
-                            @if ($rent->actual_return_date)
-                                <span class="badge bg-success">Dikembalikan</span>
-                            @else
-                                <span class="badge bg-warning">Dipinjam</span>
-                            @endif
-                        </td>
+                        <th>No</th>
+                        <th>Anggota</th>
+                        <th>Judul Buku</th>
+                        <th>Peminjaman Buku</th>
+                        <th>Batas Waktu</th>
+                        <th>Pengembalian Buku</th>
+                        <th>Status</th>
                     </tr>
-                @endforeach
-            </tbody>
-
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($rentLog as $rent)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $rent->anggota->username ?? 'N/A' }}</td>
+                            <td>{{ $rent->book->title ?? 'N/A' }}</td>
+                            <td>{{ $rent->rent_date }}</td>
+                            <td>{{ $rent->return_date }}</td>
+                            <td>
+                                {!! $rent->actual_return_date
+                                    ? '<span class="text-success">' . $rent->actual_return_date . '</span>'
+                                    : '<span class="text-danger fw-bold">Belum dikembalikan</span>' !!}
+                            </td>
+                            <td>
+                                @if ($rent->actual_return_date)
+                                    <span class="badge bg-success">Dikembalikan</span>
+                                @else
+                                    <span class="badge bg-warning">Dipinjam</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
+
 
 @endsection

@@ -29,16 +29,20 @@ class RentFormsController extends Controller
             'actual_return_date' => 'nullable|date',
         ]) ;
         
-        Rent_logs::create($validated);
-        
         $books = Book::find($validated['book_id']);
-
+        
+        if($books->status != 'in stock'){
+            return back()->with('error','Buku sedang dipinjam. Silakan pilih buku yang lain.');
+        }
+        
         if($books){
             $books->status = 'out stock';
             $books->save();
         }
+
+        Rent_logs::create($validated);
         
-        return redirect('rent-forms')->with('success','form peminjaman berhasil diinput');
+        return redirect('rent-forms')->with('success','Form peminjaman berhasil diinput');
 
     }
 }

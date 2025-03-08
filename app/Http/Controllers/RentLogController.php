@@ -28,7 +28,6 @@ class RentLogController extends Controller
 
             return response()->json(['message' => 'Tanggal pengembalian & status buku diperbarui!']);
         } catch (\Exception $e) {
-            Log::error($e->getMessage()); // Simpan error di log Laravel
             return response()->json(['error' => 'Terjadi kesalahan saat update data!'], 500);
         }
     }

@@ -25,7 +25,11 @@
                     <td>{{ $rent->book->title ?? 'N/A' }}</td>
                     <td>{{ $rent->rent_date }}</td>
                     <td>{{ $rent->return_date }}</td>
-                    <td>{{ $rent->actual_return_date ?? 'Belum dikembalikan' }}</td>
+                    <td>
+                        {!! $rent->actual_return_date
+                            ? '<span class="text-success">' . $rent->actual_return_date . '</span>'
+                            : '<span class="text-danger fw-bold">Belum dikembalikan</span>' !!}
+                    </td>
                     <td>
                         <input type="checkbox" class="return-checkbox" data-id="{{ $rent->id }}"
                             {{ $rent->actual_return_date ? 'checked disabled' : '' }}>
@@ -53,7 +57,7 @@
                         url: "/rent-logs/update-return-date/" + rentId,
                         type: "POST",
                         success: function(response) {
-                            alert(response.message);
+                            // alert(response.message);
                             location.reload();
                         },
                         error: function(xhr, status, error) {
