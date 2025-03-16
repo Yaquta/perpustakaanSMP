@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('rent_logs', function (Blueprint $table) {
-            $table->unsignedBigInteger('anggota_id')->after('id');
-            $table->foreign('anggota_id')->references('id')->on('anggota');
+        Schema::table('anggotas', function (Blueprint $table) {
+           $table->softDeletes();
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('rent_logs', function (Blueprint $table) {
+        Schema::table('anggotas', function (Blueprint $table) {
             //
         });
     }
